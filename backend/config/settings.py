@@ -1,16 +1,13 @@
+import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = "django-insecure-supply-chain-ai-dev-key"
+SECRET_KEY = "django-insecure-supply-chain-ai-dev-key-production-ready"
 
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    "127.0.0.1",
-    "localhost",
-]
-
+ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -22,12 +19,27 @@ INSTALLED_APPS = [
 
     "rest_framework",
     "corsheaders",
+
+    "users",
+    "orders",
+    "disruptions",
 ]
 
+# Add daphne and channels if installed in environment
+try:
+    import daphne
+    INSTALLED_APPS.insert(0, "daphne")
+except ImportError:
+    pass
+
+try:
+    import channels
+    INSTALLED_APPS.append("channels")
+except ImportError:
+    pass
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
-
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -37,9 +49,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-
 ROOT_URLCONF = "config.urls"
-
 
 TEMPLATES = [
     {
@@ -56,9 +66,15 @@ TEMPLATES = [
     },
 ]
 
-
 WSGI_APPLICATION = "config.wsgi.application"
+ASGI_APPLICATION = "config.asgi.application"
 
+# Django Channels In-Memory Channel Layer
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
 
 DATABASES = {
     "default": {
@@ -67,22 +83,19 @@ DATABASES = {
     }
 }
 
-
 AUTH_PASSWORD_VALIDATORS = []
 
-
 LANGUAGE_CODE = "en-us"
-
 TIME_ZONE = "Asia/Kolkata"
-
 USE_I18N = True
-
 USE_TZ = True
 
-
 STATIC_URL = "static/"
-
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-
 CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+
+# API Keys
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")
+OPENROUTE_API_KEY = os.environ.get("OPENROUTE_API_KEY", "")
