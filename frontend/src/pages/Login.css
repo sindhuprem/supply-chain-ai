@@ -1,0 +1,279 @@
+/* =========================================================
+   SUPPLYCHAIN AI — LOGIN PAGE
+   ========================================================= */
+
+.login-page {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    radial-gradient(circle at 15% 20%, rgba(37, 99, 235, 0.18), transparent 30%),
+    radial-gradient(circle at 85% 80%, rgba(20, 184, 166, 0.12), transparent 30%),
+    #08111f;
+
+  position: relative;
+  overflow: hidden;
+
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+
+/* ---------------------------------------------------------
+   BACKGROUND DECORATION
+   --------------------------------------------------------- */
+
+.login-page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+
+  background-size: 50px 50px;
+
+  pointer-events: none;
+}
+
+
+/* ---------------------------------------------------------
+   MAIN LOGIN CARD
+   --------------------------------------------------------- */
+
+.login-card {
+  width: min(420px, calc(100% - 40px));
+  padding: 42px;
+
+  background: rgba(15, 27, 45, 0.88);
+
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 20px;
+
+  box-shadow:
+    0 25px 70px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(255, 255, 255, 0.02);
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  position: relative;
+  z-index: 2;
+}
+
+
+/* ---------------------------------------------------------
+   BRAND / HEADER
+   --------------------------------------------------------- */
+
+.login-header {
+  text-align: center;
+  margin-bottom: 34px;
+}
+
+.login-header h1 {
+  margin: 0;
+
+  font-size: 32px;
+  font-weight: 750;
+  letter-spacing: -1px;
+
+  color: #ffffff;
+}
+
+.login-header h1::after {
+  content: " AI";
+
+  color: #3b82f6;
+}
+
+.login-header p {
+  margin: 10px 0 0;
+
+  color: #94a3b8;
+
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+}
+
+
+/* ---------------------------------------------------------
+   FORM
+   --------------------------------------------------------- */
+
+.login-card form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-card label {
+  margin: 0 0 8px;
+
+  color: #cbd5e1;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+
+/* ---------------------------------------------------------
+   INPUTS
+   --------------------------------------------------------- */
+
+.login-card input,
+.login-card select {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 13px 14px;
+
+  background: #0b1728;
+
+  border: 1px solid #26364b;
+  border-radius: 9px;
+
+  color: #f8fafc;
+
+  font-size: 14px;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.login-card input::placeholder {
+  color: #64748b;
+}
+
+.login-card input:hover,
+.login-card select:hover {
+  border-color: #3b4d64;
+}
+
+.login-card input:focus,
+.login-card select:focus {
+  background: #0d1b2f;
+
+  border-color: #3b82f6;
+
+  box-shadow:
+    0 0 0 3px rgba(59, 130, 246, 0.12);
+}
+
+
+/* ---------------------------------------------------------
+   SELECT
+   --------------------------------------------------------- */
+
+.login-card select {
+  cursor: pointer;
+
+  appearance: none;
+  -webkit-appearance: none;
+
+  background-image:
+    linear-gradient(45deg, transparent 50%, #64748b 50%),
+    linear-gradient(135deg, #64748b 50%, transparent 50%);
+
+  background-position:
+    calc(100% - 18px) 50%,
+    calc(100% - 13px) 50%;
+
+  background-size:
+    5px 5px,
+    5px 5px;
+
+  background-repeat: no-repeat;
+}
+
+
+/* ---------------------------------------------------------
+   SPACING BETWEEN FIELDS
+   --------------------------------------------------------- */
+
+.login-card label:not(:first-child) {
+  margin-top: 19px;
+}
+
+
+/* ---------------------------------------------------------
+   LOGIN BUTTON
+   --------------------------------------------------------- */
+
+.login-card button {
+  width: 100%;
+
+  margin-top: 28px;
+  padding: 14px;
+
+  border: none;
+  border-radius: 9px;
+
+  background: linear-gradient(
+    135deg,
+    #2563eb,
+    #1d4ed8
+  );
+
+  color: white;
+
+  font-size: 14px;
+  font-weight: 650;
+
+  letter-spacing: 0.2px;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 20px rgba(37, 99, 235, 0.25);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.login-card button:hover {
+  background: linear-gradient(
+    135deg,
+    #3b82f6,
+    #2563eb
+  );
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 12px 26px rgba(37, 99, 235, 0.32);
+}
+
+.login-card button:active {
+  transform: translateY(0);
+}
+
+
+/* ---------------------------------------------------------
+   RESPONSIVE
+   --------------------------------------------------------- */
+
+@media (max-width: 500px) {
+  .login-card {
+    padding: 30px 24px;
+    border-radius: 16px;
+  }
+
+  .login-header h1 {
+    font-size: 28px;
+  }
+}

@@ -54,17 +54,21 @@ export default function App() {
   const setupWebSocket = () => {
     try {
       const ws = new WebSocket('ws://localhost:8000/ws/disruptions/');
+
       ws.onopen = () => {
         setWsStatus(true);
         console.log("WebSocket connected to Django Channels engine.");
       };
+
       ws.onmessage = (event) => {
         const data = JSON.parse(event.data);
+
         if (data.type === 'disruption_update' && data.payload) {
           setActiveDisruption({ response_payload: data.payload });
           fetchOrders();
         }
       };
+
       ws.onclose = () => {
         setWsStatus(false);
       };
@@ -79,13 +83,16 @@ export default function App() {
         order_id: orders[0]?.id || 1,
         ...formData
       });
+
       if (resp.data && resp.data.pipeline_summary) {
-        setActiveDisruption({ response_payload: resp.data.pipeline_summary });
+        setActiveDisruption({
+          response_payload: resp.data.pipeline_summary
+        });
         fetchOrders();
       }
     } catch (err) {
       console.error("Disruption trigger error:", err);
-      // Client-side simulation fallback
+
       setActiveDisruption({
         response_payload: {
           disruption_type: formData.disruption_type,
@@ -125,7 +132,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans">
-      {/* Top Navbar */}
       <Navbar
         activeRole={activeRole}
         setActiveRole={setActiveRole}
@@ -134,24 +140,29 @@ export default function App() {
         onOpenMemory={() => setIsMemoryModalOpen(true)}
       />
 
-      {/* Main Container */}
       <main className="flex-1 max-w-7xl w-full mx-auto p-4 space-y-4">
-        {/* Role Dashboard View */}
-        <RoleDashboard role={activeRole} orders={orders} activeDisruption={activeDisruption} />
+        <RoleDashboard
+          role={activeRole}
+          orders={orders}
+          activeDisruption={activeDisruption}
+        />
 
-        {/* 2-Column Split: Leaflet Map & Multi-Agent Terminal */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-stretch min-h-[500px]">
-          <RouteMap activeOrder={orders[0]} activeDisruption={activeDisruption} />
-          <AgentTerminal activeDisruption={activeDisruption} />
+          <RouteMap
+            activeOrder={orders[0]}
+            activeDisruption={activeDisruption}
+          />
+
+          <AgentTerminal
+            activeDisruption={activeDisruption}
+          />
         </div>
       </main>
 
-      {/* Footer */}
       <footer className="border-t border-slate-800/80 py-3 text-center text-xs text-slate-500 glass-panel mt-auto">
         SupplyChainAI • LangGraph Multi-Agent Disruption Engine • OpenRouteService • ChromaDB Cognitive Memory
       </footer>
 
-      {/* Modals */}
       <DisruptionTriggerModal
         isOpen={isTriggerModalOpen}
         onClose={() => setIsTriggerModalOpen(false)}
