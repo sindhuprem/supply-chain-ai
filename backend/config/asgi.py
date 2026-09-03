@@ -8,15 +8,16 @@ django_asgi_app = get_asgi_application()
 try:
     from channels.routing import ProtocolTypeRouter, URLRouter
     from channels.auth import AuthMiddlewareStack
-    import disruptions.routing
+    import orders.routing
 
     application = ProtocolTypeRouter({
         "http": django_asgi_app,
         "websocket": AuthMiddlewareStack(
             URLRouter(
-                disruptions.routing.websocket_urlpatterns
+                orders.routing.websocket_urlpatterns
             )
         ),
     })
-except ImportError:
+except Exception as e:
+    print(f"ASGI setup fallback to HTTP due to: {e}")
     application = django_asgi_app
